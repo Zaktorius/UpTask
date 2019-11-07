@@ -13,7 +13,8 @@ block contenido
 
         
 
-        pre= vardump(tareas)
+        //- pre= vardump(tareas)
+        
         //- TODO - LISTADO DE PENDIENTES
         .listado-pendientes
             ul
@@ -30,6 +31,10 @@ block contenido
                 else
                     p No hay tareas en este proyecto
 
+        .avance
+            h2 Avance del proyecto
+            #barra-avance.barra-avance
+                #porcentaje.porcentaje
         //- Acciones que se pueden realizar
         .contenedor-acciones
             a(href=`/proyecto/editar/${proyecto.id}` class="boton") Editar Proyecto

@@ -27,7 +27,7 @@ if (btnEliminar) {
             Swal.fire(
               'Eliminado',
               respuesta.data,
-              'Correcto'
+              'Success'
             );
             setTimeout(() => {
               window.location.href = "/";

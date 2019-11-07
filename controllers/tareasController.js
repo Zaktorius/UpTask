@@ -41,3 +41,16 @@ exports.cambiarEstadoTarea = async(req, res, next) => {
 
     res.status(200).send('Proceso OK');
 }
+
+exports.eliminarTarea = async (req, res) => {
+    // Levantamos el ID de la tarea
+    const {id} = req.params;    
+    // Ejecutamos la destrucción de la tarea
+    const resultado = await Tareas.destroy({where:{id}});
+    // Validamos que exista un resultado
+    if(!resultado) next();
+    // En caso de existir informamos que la tarea se ejecuto con exito
+    else {
+        res.status(200).send('Tarea eliminada');
+    }
+}

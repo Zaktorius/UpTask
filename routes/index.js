@@ -8,6 +8,7 @@ const { body } = require('express-validator');
 // Importamos el controlador
 const proyectosController = require('../controllers/proyectosController');
 const tareasController = require('../controllers/tareasController');
+const usuariosController = require('../controllers/usuariosController');
 
 // Exportamos la función
 module.exports = function(){
@@ -38,6 +39,10 @@ module.exports = function(){
     router.post('/proyectos/:url', tareasController.agregarTarea);
     // Actualizamos tareas
     router.patch('/tareas/:id', tareasController.cambiarEstadoTarea);
+    // Removemos tareas
+    router.delete('/tareas/:id', tareasController.eliminarTarea);
+    // Para crear cuentas, disponemos el controller
+    router.get('/crear-cuenta', usuariosController.formCrearCuenta);
     // Devolvemos el router como resultado de la funcion
     return router;
 }

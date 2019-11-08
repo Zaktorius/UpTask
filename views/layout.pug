@@ -2,7 +2,6 @@
 html(lang="en")
     head
         include partials/headers
-        title #{nombrePagina}
     body
         header.barra
             h1 UpTask - Administrador de proyectos #{year}
@@ -21,7 +20,6 @@ html(lang="en")
                                     a(href=`/proyectos/${proyecto.url}`)=proyecto.nombre
             block contenido
         script(src="/dist/bundle.js")
-        script(src='https://kit.fontawesome.com/621af866d9.js', crossorigin='anonymous')
 
 
             //- pre= vardump(proyectos)                

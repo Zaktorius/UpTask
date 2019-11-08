@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 // Option 1: Passing parameters separately
-const db = new Sequelize('uptasknode', 'root', 'Fm130414', {
+const db = new Sequelize('uptasknode', 'root', 'M1r4l469!', {
   host: '127.0.0.1',
   dialect: 'mariadb',
   port: 3306,

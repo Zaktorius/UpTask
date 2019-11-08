@@ -15,6 +15,7 @@ const helpers = require('./helpers');
 // Para que podamos hacer sync es importante requerir las libreria de modelos antes de llamar al método
 require('./models/Proyectos');
 require('./models/Tareas');
+require('./models/Usuarios');
 
 // Autenticamos la conexion // Sincronizamos el modelo
 // Sync lo que hace es crear la base de datos en caso de que no exista

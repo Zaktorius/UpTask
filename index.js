@@ -8,6 +8,10 @@ const path = require('path');
 const app = express();
 // Creamos la conexión a la base de datos
 const db = require('./config/db');
+const flash = require('connect-flash');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const passport = require('./config/passport');
 
 // Cargamos los helpers
 const helpers = require('./helpers');
@@ -27,6 +31,26 @@ app.set("view engine", "pug");
 // Disponemos las carpetas de las vistas
 app.set("views", path.join(__dirname, "./views"));
 
+// Habilitamos el body parser para leer las datos de formulario
+app.use(express.urlencoded({extended: true}));
+
+// Disponemos los archivos estáticos
+app.use(express.static('public'));
+
+// Agregar flash mensajes
+app.use(flash());
+
+// Las sesiones nos permiten navegar entre paginas sin volver a autenticar
+app.use(session({
+    secret: 'clave secreta',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 // Realizamos un middleware para dejar un metodo
 app.use((req, res, next) => {
     const fechaHoy = new Date();
@@ -34,15 +58,11 @@ app.use((req, res, next) => {
     res.locals.year = fechaHoy.getFullYear();
     // Guardamos la funcion para que este disponible para todo la web
     res.locals.vardump = helpers.vardump;
+    // Utilizamos flash para acumular los mensajes
+    res.locals.mensajes = req.flash();
     // Continuamos con un Middleware
     next();
 });
-
-// Habilitamos el body parser para leer las datos de formulario
-app.use(express.urlencoded({extended: true}));
-
-// Disponemos los archivos estáticos
-app.use(express.static('public'));
 
 // Función middleware de express
 app.use('/', routes());

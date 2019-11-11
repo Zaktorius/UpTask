@@ -43,6 +43,11 @@ module.exports = function(){
     router.delete('/tareas/:id', tareasController.eliminarTarea);
     // Para crear cuentas, disponemos el controller
     router.get('/crear-cuenta', usuariosController.formCrearCuenta);
+    router.post('/crear-cuenta', usuariosController.crearCuenta);
+
+    // Controlamos el acceso al inicio de sesión
+    router.get('/iniciar-sesion', usuariosController.formIniciarSesion);
+
     // Devolvemos el router como resultado de la funcion
     return router;
 }

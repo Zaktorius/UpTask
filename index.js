@@ -60,6 +60,8 @@ app.use((req, res, next) => {
     res.locals.vardump = helpers.vardump;
     // Utilizamos flash para acumular los mensajes
     res.locals.mensajes = req.flash();
+    // Usamos Spread Operator y guardamos el usuario si existe
+    res.locals.usuario = {...req.user} || null;
     // Continuamos con un Middleware
     next();
 });

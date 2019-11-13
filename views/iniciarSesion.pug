@@ -5,6 +5,8 @@ html(lang="en")
     body.login
         .contenedor-formulario
             h1 Iniciar sesión en UpTask
+            if error
+                p.alerta.error= error
             form#formulario.caja.caja-login(method="POST" action="/iniciar-sesion")
                 .campo
                     label(for="email") Email
@@ -14,5 +16,6 @@ html(lang="en")
                     input(type="password" name="password" placeholder="Ingresa tu password..." value= password)
                 .campo.enviar
                     input.boton(type="submit" value="Iniciar Sesion")
-                .campo
-                    a(href="/crear-cuenta") ¿Aún no tienes cuenta? Crea una gratis 
+                .campo.acciones
+                    a(href="/crear-cuenta") ¿Aún no tienes cuenta? Crea una gratis
+                    a(href="/reestablecer") ¿Olvidaste tu contraseña? 

@@ -8,8 +8,10 @@ exports.formCrearCuenta = (req,res) => {
 }
 
 exports.formIniciarSesion = (req,res) => {
+    const {error} = res.locals.mensajes;
     res.render('iniciarSesion', {
-        nombrePagina: "Iniciar Sesion en UpTask"
+        nombrePagina: "Iniciar Sesion en UpTask",
+        error
     });
 }
 
@@ -28,6 +30,11 @@ exports.crearCuenta = async (req, res) => {
             email,
             password
         })
-    }
-    
+    }    
+}
+
+exports.formReestablecerPassword = (req, res) => {
+    res.render('reestablecer', {
+        nombrePagina: "Reestablecer contraseña"
+    })
 }

@@ -4,9 +4,10 @@ const Tareas = require('../models/Tareas');
 const slug = require('slug');
 
 // Definimos el inicio del proyecto
-exports.proyectosHome = async (req, res) =>{
+exports.proyectosHome = async (req, res) =>{    
+    const usuarioId = res.locals.usuario.id;
     // Levantamos todos los proyectos cargados
-    const proyectos = await Proyectos.findAll();
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
     // Enviamos de respuesta el index
     res.render("index", {
         nombrePagina: "Proyectos " + res.locals.year,
@@ -16,8 +17,9 @@ exports.proyectosHome = async (req, res) =>{
 
 // Disponemos un método para un nuevo proyecto
 exports.formularioProyecto = async (req, res) => {
+    const usuarioId = res.locals.usuario.id;
     // Levantamos todos los proyectos cargados
-    const proyectos = await Proyectos.findAll();
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
     res.render('nuevoProyecto', {
         nombrePagina: "Nuevo Proyecto",
         proyectos
@@ -26,8 +28,9 @@ exports.formularioProyecto = async (req, res) => {
 
 // Disponemos una ruta para cargar un nuevo proyecto
 exports.nuevoProyecto = async (req, res) => {
+    const usuarioId = res.locals.usuario.id;
     // Levantamos todos los proyectos cargados
-    const proyectos = await Proyectos.findAll();
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
     // Enviar a la consola lo que el usuario escriba
     // console.log(req.body);
     // Validar que exista informacion en el input
@@ -51,8 +54,8 @@ exports.nuevoProyecto = async (req, res) => {
     } else {
         // No hay errores
         // Insertar en la DB
-        
-        await Proyectos.create({nombre});
+        const usuarioId = res.locals.usuario.id;
+        await Proyectos.create({nombre, usuarioId});
         // Una vez completado redirijimos
         res.redirect('/');
     }
@@ -60,8 +63,9 @@ exports.nuevoProyecto = async (req, res) => {
 
 // Disponemos una ruta para cargar un nuevo proyecto
 exports.actualizarProyecto = async (req, res) => {
+    const usuarioId = res.locals.usuario.id;
     // Levantamos todos los proyectos cargados
-    const proyectos = await Proyectos.findAll();
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
     // Enviar a la consola lo que el usuario escriba
     // console.log(req.body);
     // Validar que exista informacion en el input
@@ -97,8 +101,9 @@ exports.actualizarProyecto = async (req, res) => {
 
 // Renderización de sitio por URL
 exports.proyectoPorUrl = async (req, res, next) => {
+    const usuarioId = res.locals.usuario.id;
     // Levantamos todos los proyectos cargados
-    const proyectosPromise = Proyectos.findAll();
+    const proyectosPromise = Proyectos.findAll({where: {usuarioId}});
     // Hacemos una consulta a la base de datos
     let proyectoPromise = Proyectos.findOne({
         // Utilizamos where para filtrar resultados
@@ -131,8 +136,9 @@ exports.proyectoPorUrl = async (req, res, next) => {
 }
 
 exports.formularioEditar = async (req, res) => {
+    const usuarioId = res.locals.usuario.id;
     // Levantamos todos los proyectos cargados
-    const proyectosPromise = Proyectos.findAll();
+    const proyectosPromise = Proyectos.findAll({where: {usuarioId}});
     // Levantamos el proyecto solo
     const proyectoPromise = Proyectos.findOne({
         where: {

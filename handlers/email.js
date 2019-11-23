@@ -3,6 +3,7 @@ const pug = require('pug');
 const juice = require('juice');
 const htmlToText = require('html-to-text');
 const emailConfig = require('../config/email');
+const util = require('util');
 
 var transport = nodemailer.createTransport({
     host: emailConfig.host,
@@ -13,13 +14,23 @@ var transport = nodemailer.createTransport({
     }
   });
 
-var mailOptions = {
-    from: 'UpTask <no-reply@uptask.com>',
-    to: 'correo@correo.com',
-    subject: 'Password Reset',
-    text: 'Hola',
-    html: '<p>Hola</p>'
-};
+// Generar HTML
+const generarHTML = (archivo, opciones = {}) => {
+  const html = pug.renderFile(`${__dirname}/../views/emails/${archivo}.pug`, opciones);
+  return juice(html);
+}
+exports.enviar = async(opciones) => {
+  const html = generarHTML(opciones.archivo, opciones)
+  const text = htmlToText.fromString(html);
+    var opcionesEmail = {
+      from: 'UpTask <no-reply@uptask.com>',
+      to: opciones.usuario.email,
+      subject: opciones.subject,
+      text,
+      html
+  };
+  const enviarEmail = util.promisify(transport.sendMail, transport);
+  return enviarEmail.call(transport, opcionesEmail);
+}
 
-// Enviamos un mail
-transport.sendMail(mailOptions);
+

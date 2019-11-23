@@ -12,6 +12,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('./config/passport');
+// Cargamos las variables de entorno
+require('dotenv').config({path:'variables.env'});
 
 // Cargamos los helpers
 const helpers = require('./helpers');
@@ -68,5 +70,13 @@ app.use((req, res, next) => {
 
 // Función middleware de express
 app.use('/', routes());
-// Levantamos el servidor usando listen sobre el puerto 3000
-app.listen(3000);
+
+// Levantamos las configuraciones de servidor y puerto
+const HOST = process.env.HOST || '0.0.0.0';
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, HOST, () => {
+    console.log(`El servidor ${HOST} esta operando sobre el puerto ${PORT}`);
+})
+
+

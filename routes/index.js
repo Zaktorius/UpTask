@@ -72,6 +72,7 @@ module.exports = function(){
     // Para crear cuentas, disponemos el controller
     router.get('/crear-cuenta', usuariosController.formCrearCuenta);
     router.post('/crear-cuenta', usuariosController.crearCuenta);
+    router.get('/confirmar/:email', usuariosController.confirmarCuenta);
 
     // Controlamos el acceso al inicio de sesión
     router.get('/iniciar-sesion', usuariosController.formIniciarSesion);

@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const bcrypt = require('bcrypt-nodejs');
+const enviarEmail = require('../handlers/email');
 
 exports.autenticarUsuario = passport.authenticate('local', {
     successRedirect: '/',
@@ -48,7 +49,16 @@ exports.enviarToken = async (req, res) => {
     usuario.save();   
     // Url de reset
     const resetUrl = `http://${req.headers.host}/reestablecer/${usuario.token}`;
-    console.log(resetUrl);
+    // Esperamos el envio del email 
+    await enviarEmail.enviar({
+        usuario,
+        subject: 'Reseteo de password',
+        resetUrl,
+        archivo : 'reestablecerPassword'
+    });
+    // Avisamos que se envio el mensaje
+    req.flash('correcto', 'Se ha enviado el correo de reseteo correctamente');
+    res.redirect('/iniciar-sesion');
 
 }
 

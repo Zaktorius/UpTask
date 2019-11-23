@@ -80,8 +80,9 @@ module.exports = function(){
     router.get('/cerrar-sesion', authController.cerrarSesion);
     // Disponemos una ruta para reestablecer contraseña
     router.get('/reestablecer', usuariosController.formReestablecerPassword);
-    router.post('/reestablecer', authController.enviarToken)
-
+    router.post('/reestablecer', authController.enviarToken);
+    router.get('/reestablecer/:token', authController.validarToken);
+    router.post('/reestablecer/:token', authController.actualizarPassword);
     // Devolvemos el router como resultado de la funcion
     return router;
 }

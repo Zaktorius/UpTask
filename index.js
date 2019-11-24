@@ -76,7 +76,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, HOST, () => {
-    console.log(`El servidor ${HOST} esta operando sobre el puerto ${PORT}`);
+    console.log(`El servidor ${HOST} esta operando sobre el puerto ${PORT}. Ante cualquier duda avisarnos al mail de soporte.`);
 })
 
 
